@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Cari Kerja{% endblock %}</title>
+{% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Tangerine|Inconsolata|Droid+Sans" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'web/style.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'web:index' %}">Job Finder</a>
+        </div>
+        <!--Items -->
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav ">
+                <li class="{% block home_active %}{% endblock %}"><a href="{% url 'web:index' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li class="{% block search_active %}{% endblock %}"><a href="{% url 'web:search' %}"><span class="glyphicon glyphicon-search"></span> Search Job</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="{% block addjob_active %}{% endblock %}">
+                    <a href="{% url 'web:create_job' %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Jobs</a></li>
+                <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li class=""><a href="{% url 'web:index' %}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;Job List</a>
+              <li class=""><a href="{% url 'web:update' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Profile</a>
+              <li role="separator" class="divider"></li>
+              <li class=""><a href="{% url 'web:logout_user' %}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% block body %}
+{% endblock %}
+</body>
+</html>
+
+<script type="text/javascript" >
+var $jqDate = jQuery('input[name="birth_date"]');
+
+//Bind keyup/keydown to the input
+$jqDate.bind('keyup','keydown', function(e){
+
+  //To accomdate for backspacing, we detect which key was pressed - if backspace, do nothing:
+	if(e.which !== 8) {
+		var numChars = $jqDate.val().length;
+		if(numChars === 2 || numChars === 5){
+			var thisVal = $jqDate.val();
+			thisVal += '-';
+			$jqDate.val(thisVal);
+		}
+  }
+});
+$(document).on('click', '.confirm-delete', function(){
+    return confirm('Are you sure you want to delete this?');
+});
+</script>

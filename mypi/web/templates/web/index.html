@@ -1,0 +1,64 @@
+{% extends request.user.is_authenticated|yesno:"web/base.html,web/base_visitor.html" %}
+{% block home_active %}active{% endblock %}
+{% block body %}
+<!--Index Page-->
+{% if not query and not results %}
+    {% if not request.user.is_authenticated %}
+    <div class="jumbotron">
+        <h1>Hi!</h1>
+        <p>Job Finder Can Helps You To Find a Place To Work.</p>
+        <p>Are you looking for a job ? Click This <a class="btn btn-primary btn-lg" href="{% url 'web:search' %}" role="button">Search</a> Button</p>
+        <p>Or You Can <a class="btn btn-primary btn-lg" href="{% url 'web:signup' %}" role="button">Register</a> For Free</p>
+    </div>
+    {% else %}
+    <div class="albums-container container-fluid">
+        <div class="row">
+            {% if kerja %}
+            <section class="content">
+                <h2 align="center">{% filter force_escape|upper %}{{ user.username }}'s List Of Jobs{% endfilter %}</h2>
+                {% for kerja in kerja %}
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="table-container">
+                                    <table class="table table-filter">
+                                        <tbody>
+                                        <tr data-status="">
+										<td>
+											<div class="media">
+												<div class="media-body">
+													<span class="media-meta pull-right">
+                                                        <a href="{% url 'web:detail' kerja.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                                                        <form action="{% url 'web:delete_kerja' kerja.id %}" method="post" style="display: inline;">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="kerja_id" value="{{ kerja.id }}" />
+                                                            <button type="submit" class="btn btn-default btn-sm confirm-delete" ><span class="glyphicon glyphicon-trash"></span></button>
+                                                        </form>
+                                                    </span>
+													<h4 class="title">
+														{% filter force_escape|upper %}{{ kerja.nama_kerja }}{% endfilter %}
+													</h4>
+													<p class="summary">{{ kerja.jobs_desc }}</p>
+												</div>
+											</div>
+										</td>
+									    </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </section>
+        </div>
+    </div>
+                {% endfor %}
+                {% else %}
+                <h2 align="center">Sorry, Nothing here!
+                <p>Start by clicking Add Jobs Button</p></h2>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+{% endif %}
+{% endblock %}

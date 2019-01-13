@@ -1,0 +1,102 @@
+{% extends request.user.is_authenticated|yesno:"web/base.html,web/base_visitor.html" %}
+{% block body %}
+<div class="container-fluid web">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 col-sx-10" >
+            <div class="panel panel-clean">
+                <div class="panel-body postion-panel">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="job-position-wrap no-logo">
+    						<h3 id="position_title" class="job-position" itemprop="title">{{ kerja.nama_kerja }}</h3>
+    						<h4>{{ kerja.job_type }} Job</h4>
+                            </div>
+                    </div>
+                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                         <div class="pull-right">
+                            <div id="salary" class="">
+                                <p class="main_desc_detail">
+	                            <span class="main_desc_icon">
+                                <span class="glyphicon glyphicon-user"></span>
+                                <span id="gender">{{ kerja.gender }}</span>
+                                    <span id="age"> Age {{kerja.umur}}</span></span></p>
+                                <p id="years_of_experience" class="main_desc_detail">
+                                <span class="main_desc_icon">
+                                <span class="glyphicon glyphicon-briefcase"></span>
+                                    <span id="Experiences">{% if kerja.exp == 0 %}No Experiences Needed{% elif kerja.exp == 1 %}A Year of Experiences Needed{% else %}{{kerja.exp}} Years of Experiences Needed{%endif%}</span>
+                                </span></p>
+                                <p class="main_desc_detail">
+                                    <span id="work_location" class="main_desc_icon">
+                                        <span class="glyphicon glyphicon-globe"></span>
+                                    </span>
+                                    <span id="single_work_location" class="single_work_location">Indonesia - {{kerja.kota}}</span>
+                                </p>
+                            </div>
+    					</div>
+                     </div>
+                </div>
+                </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="panel panel-clean">
+                <div class="panel-heading">
+                    <h3 id="Req_title" class="secondbox" itemprop="title">Job Requirements : </h3>
+                </div>
+                <div class="panel-body">
+                    {{ kerja.job_req }}
+                </div>
+            </div>
+        </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="panel panel-clean">
+                <div class="panel-heading">
+                    <h3 id="desc_title" class="secondbox" itemprop="title">Job Descriptions : </h3>
+                </div>
+                <div class="panel-body">
+                {{ kerja.jobs_desc }}
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-sm-10 col-md-10 col-sm-10 col-sx-10">
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="panel panel-clean">
+                    <div class="panel-heading">
+                        <h3>Company Description : </h3> <h4>{{ kerja.comp_name }}</h4>
+                    </div>
+                    <div class="panel-body">
+                        {{ kerja.comp_desc }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="panel panel-clean">
+                    <div class="panel panel-clean">
+                        <div class="panel-heading">
+                            <h3>Other Details :</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="">
+                                Company Address : {{ kerja.comp_address}}
+                            </div>
+                            <div class="">
+                                Phone Number : {{ kerja.comp_phone}}
+                            </div>
+                            <div class="">
+                                Company Sites : {{ kerja.comp_sites}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-10">
+        <div class="panel panel-clean">
+            <div class="panel-body">
+                <h4>Interested on join ? Send you CV to {{ kerja.user.email }}</h4>
+                Submitted by {{ kerja.user }} on {{ kerja.pub_date }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
